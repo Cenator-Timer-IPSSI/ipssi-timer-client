@@ -25,10 +25,10 @@ export const CREATE_TEAM = gql`
 export const CREATE_PROJECT = gql`
     mutation createProject($input: CreateProjectInput!) {
         createProject(input: $input) {
-            ...timerInfos
+            ...projectsInfosForAUser
         }
     }
-    ${TIMER_INFOS}
+    ${PROJECT_INFOS}
 `;
 
 // Mutation(create timer)

@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
 	const [ state, dispatch ] = useReducer(firebaseReducer, initialState);
 
 	useEffect(() => {
-		const unsubscribe = auth().onAuthStateChanged(async (user) => {
+		let unsubscribe = auth().onAuthStateChanged(async (user) => {
 			if (user) {
 				const idTokenResult = await user.getIdTokenResult();
 				dispatch({
@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
 			}
 		});
 		// call clean method to ensure that state won't lose if component is unmount and mounted again
-		return () => unsubscribe = async => {};
+		return () => unsubscribe();
 	}, []);
 
 	const value = { state, dispatch };
