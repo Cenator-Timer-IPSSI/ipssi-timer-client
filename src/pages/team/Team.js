@@ -10,8 +10,8 @@ import omitDeep from 'omit-deep';
 
 const initialState = {
 	name: '',
-	description: ''
-	//users: []
+	description: '',
+	users: []
 };
 const Team = () => {
 	const [ values, setValues ] = useState(initialState);
@@ -105,7 +105,7 @@ const Team = () => {
 				users.push(options[i].value);
 			}
 		}
-		//setValues({ users: users, ...values });
+		setValues({ users: users, ...values });
 	};
 
 	const createTeamForm = () => {
@@ -136,21 +136,24 @@ const Team = () => {
 					/>
 				</div>
 				<div className="form-group mb-5 mt-3">
-					<label>Ajouter des personnes à votre équipe</label>
-					<select
-						multiple={true}
-						onChange={onSelectChange}
-						name="users"
-						className="custom-select"
-						id="inputGroupSelect02"
-					>
-						{usersFomDb &&
-							usersFomDb.allUsers.map((user) => (
-								<option key={user._id} value={user}>
-									{user.name}
-								</option>
-							))}
-					</select>
+					{/* <label>Ajouter des personnes à votre équipe</label> */}
+					<fieldset>
+						<legend>Ajouter des personnes à votre équipe</legend>
+						<select
+							multiple={true}
+							onChange={onSelectChange}
+							name="users"
+							className="custom-select"
+							id="inputGroupSelect02"
+						>
+							{usersFomDb &&
+								usersFomDb.allUsers.map((user) => (
+									<option key={user._id} value={user}>
+										{user.name} - {user.email}
+									</option>
+								))}
+						</select>
+					</fieldset>
 				</div>
 				<button className="btn btn-raised btn-primary" type="submit" disabled={loading || !name}>
 					Créer l'équipe
@@ -183,12 +186,7 @@ const Team = () => {
 				{teams &&
 					teams.teamsCreatedByAdmin.map((team) => (
 						<div className="col-md-6 pt-5" key={team._id}>
-							<TeamCard
-								handleDelete={handleDelete}
-								team={team}
-								showDeleteButton={true}
-								showUpdateButton={true}
-							/>
+							<TeamCard handleDelete={handleDelete} team={team} showDeleteButton={true} showUpdateButton={true} />
 						</div>
 					))}
 			</div>
