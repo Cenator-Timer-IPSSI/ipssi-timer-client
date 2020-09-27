@@ -1,16 +1,16 @@
 <div align="center">
-	<img width="500" height="200" src="./src/assets/logo.svg" alt="Project Timer Manager logo">
+	<img width="500" height="200" src="./src/assets/logo.svg" alt="Cenator Timer Manager logo">
 	<br>
 	<br>
 </div>
 
-# Project Timer Manager - Client
+# Cenator Timer Manager - Client
 
-Project Timer Manager is a `` web application to log passed time by project`` that allow users `to manage its projects, teams and logged times`.
+Cenator Timer Manager is a `` web application to log passed time by project`` that allow users `to manage its projects, teams and logged times`.
 
 This part concerns the Frontend side of the web application. The application you are going to interact with.
 
-Manage your projects easily with Project Timer Manager(PTM) by creating an account then teams and projects and logging all your tasks to top it all off.
+Manage your projects easily with Cenator Timer Manager(CTM) by creating an account then teams and projects and logging all your tasks to top it all off.
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ Before you begin, ensure you have met the following requirements:
 <!--- These are just example requirements. Add, duplicate or remove as required --->
 * If you have a `Windows`, `Linux` or a `Mac` machine, that's fine, you're good to go.
 
-## Installing Project Timer Manager - Client side
+## Installing Cenator Timer Manager - Client
 
 Rename the `.env.example` file in the root folder and put the correct values in the respective variables.
 
@@ -32,9 +32,9 @@ REACT_APP_COMPLETE_REGISTRATION_ENDPOINT=http://localhost:3001/complete-registra
 REACT_APP_REDIRECT_LOGIN_ENDPOINT=http://localhost:3001/login # important to keep it like so 
 
 ```
-## Using Project Timer Manager
+## Using Cenator Timer Manager
 
-To use **Project Timer Manager** , follow these steps:
+To use **Cenator Timer Manager** , follow these steps:
 
 ```sh
 
@@ -48,14 +48,14 @@ You can play with the API without the front if you wish by going on: `http://loc
 **Note**: You must know how to make [GraphQL](https://graphql.org/) queries and mutations.
 
 
-## Contributing to Project Timer Manager
+## Contributing to Cenator Timer Manager
 <!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
-To contribute to Project Timer Manager, follow these steps:
+To contribute to Cenator Timer Manager, follow these steps:
 
 1. Fork this repository.
 2. Create a branch: `git checkout -b <branch_name>`.
 3. Make your changes and commit them: `git commit -m '<commit_message>'`
-4. Push to the original branch: `git push origin Project Timer Manager/<location>`
+4. Push to the original branch: `git push origin Cenator Timer Manager/<location>`
 5. Create the pull request.
 
 Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
