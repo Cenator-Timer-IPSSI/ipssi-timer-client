@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
-const RedirectLoader = ({ path }) => {
+const RedirectLoader = ({ path, history }) => {
     const [counter, setCounter] = useState(5);
-    let history = useHistory();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -15,7 +13,7 @@ const RedirectLoader = ({ path }) => {
 
         // clean the hook
         return () => clearInterval(interval);
-    }, [counter])
+    }, [counter, history, path])
 
     return (
         <div className="container-fluid p-5 text-center">

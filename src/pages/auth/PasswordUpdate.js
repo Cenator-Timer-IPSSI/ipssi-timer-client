@@ -62,7 +62,6 @@ const PasswordUpdate = () => {
 				setOldPassword={setOldPassword}
 				loading={loading}
 				btnText="Mettre à jour"
-				disabledBtn={!newPassword || loading}
 				onSubmitHandler={onSubmitHandler}
 				showPasswordInput
 				hideEmailInput
