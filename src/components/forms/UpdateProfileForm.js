@@ -45,7 +45,7 @@ const UpdateProfileForm = ({ username, name, email, bio, onSubmitHandler, onChan
 			</div>
 
 			<button className="btn btn-raised btn-primary" disabled={!email || loading}>
-				Mettre à jour mon profil
+				Mettre é jour mon profil
 			</button>
 		</form>
 	);

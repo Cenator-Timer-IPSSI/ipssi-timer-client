@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 
 // Apollo imports --
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -93,13 +92,13 @@ const Profile = () => {
 				</div>
 				<ImageUpload profile={profile} setProfile={setProfile} setLoading={setLoading} loading={loading} />
 			</div>
+
 			<UpdateProfileForm
 				{...profile}
 				onSubmitHandler={onSubmitHandler}
 				onChangeHandler={onChangeHandler}
 				loading={loading}
 			/>
-			<a className="btn btn-raised btn-primary" href="/password/update">Changer mot de passe</a>
 		</div>
 	);
 };
