@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
-// import { AuthContext } from '../../context/authContext';
+import { AuthContext } from '../../context/authContext';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { CREATE_PROJECT, DELETE_PROJECT } from '../../graphql/mutations';
 import { ALL_PROJECTS } from '../../graphql/queries';
@@ -95,7 +95,7 @@ const Project = () => {
 		setValues({ ...values, [e.target.name]: e.target.value });
 	};
 
-	/* const onSelectChange = (e) => {
+	const onSelectChange = (e) => {
 		let options = e.target.options;
 		let users = [];
 		for (var i = 0, l = options.length; i < l; i++) {
@@ -105,7 +105,7 @@ const Project = () => {
 		}
 		setValues({ users: users, ...values });
 	};
- */
+
 	const createProjectForm = () => {
 		return (
 			<form onSubmit={onSubmitHandler}>

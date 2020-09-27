@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../context/authContext';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { CREATE_TEAM, DELETE_TEAM } from '../../graphql/mutations';
 import { ALL_TEAMS, ALL_USERS } from '../../graphql/queries';
 import TeamCard from '../../components/TeamCard';
-// import TeamForm from '../../components/forms/TeamForm';
+import TeamForm from '../../components/forms/TeamForm';
+import omitDeep from 'omit-deep';
 
 const initialState = {
 	name: '',
@@ -14,10 +16,10 @@ const initialState = {
 const Team = () => {
 	const [ values, setValues ] = useState(initialState);
 	const [ loading, setLoading ] = useState(false);
-	// const [ selected, setSelected ] = useState([]);
+	const [ selected, setSelected ] = useState([]);
 
 	// state values
-	const { name, description/* , users */ } = values;
+	const { name, description, users } = values;
 	// mutation
 	const [ createTeam ] = useMutation(CREATE_TEAM, {
 		// read query from cache / write query to cache

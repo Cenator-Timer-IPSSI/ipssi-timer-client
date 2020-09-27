@@ -4,7 +4,7 @@ import { useLazyQuery, useQuery, useMutation } from '@apollo/react-hooks';
 import { SINGLE_TEAM, ALL_USERS } from '../../graphql/queries';
 import { UPDATE_TEAM } from '../../graphql/mutations';
 import { useParams } from 'react-router-dom';
-// import TeamForm from '../../components/forms/TeamForm';
+import TeamForm from '../../components/forms/TeamForm';
 import omitDeep from 'omit-deep';
 import TimerView from '../timer/TimerView';
 
@@ -23,7 +23,7 @@ const TeamUpdate = () => {
 	const { teamid } = useParams();
 
 	// Grab data inside state
-	const { name, description/* , users */ } = values;
+	const { name, description, users } = values;
     const { data: usersFomDb } = useQuery(ALL_USERS);
 
 	useMemo(
@@ -38,13 +38,13 @@ const TeamUpdate = () => {
 				});
 			}
 		},
-		[ singleTeam, values ]
+		[ singleTeam ]
 	);
 
 	useEffect(() => {
 		console.log(teamid);
 		getSingleTeam({ variables: { teamId: teamid } });
-	}, [values, getSingleTeam, teamid]);
+	}, []);
 
 	const onChangeHandler = (e) => {
 		setValues({ ...values, [e.target.name]: e.target.value });

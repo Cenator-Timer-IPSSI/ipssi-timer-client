@@ -1,15 +1,16 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useLazyQuery, useMutation } from '@apollo/react-hooks';
-import { SINGLE_PROJECT } from '../../graphql/queries';
-import { UPDATE_PROJECT } from '../../graphql/mutations';
+import { useLazyQuery, useQuery, useMutation } from '@apollo/react-hooks';
+import { SINGLE_TEAM, ALL_USERS, SINGLE_PROJECT } from '../../graphql/queries';
+import { UPDATE_TEAM, UPDATE_PROJECT } from '../../graphql/mutations';
 import { useParams } from 'react-router-dom';
+import omitDeep from 'omit-deep';
 import TimerView from '../timer/TimerView';
 
 const ProjectUpdate = () => {
 	const [ values, setValues ] = useState({
 		name: '',
-		description: ''
+		description: '',
 	});
 	const [ getSingleProject, { data: singleProject } ] = useLazyQuery(SINGLE_PROJECT);
 	const [ updateProject ] = useMutation(UPDATE_PROJECT);
@@ -21,7 +22,7 @@ const ProjectUpdate = () => {
 
 	// Grab data inside state
 	const { name, description } = values;
-	// const { data: usersFomDb } = useQuery(ALL_USERS);
+    const { data: usersFomDb } = useQuery(ALL_USERS);
 
 	useMemo(
 		() => {
@@ -30,17 +31,17 @@ const ProjectUpdate = () => {
 					...values,
 					_id: singleProject.singleProject._id,
 					name: singleProject.singleProject.name,
-					description: singleProject.singleProject.description
+					description: singleProject.singleProject.description,
 				});
 			}
 		},
-		[ singleProject, values ]
+		[ singleProject ]
 	);
 
 	useEffect(() => {
 		console.log(projectid);
 		getSingleProject({ variables: { projectId: projectid } });
-	}, [projectid, getSingleProject]);
+	}, []);
 
 	const onChangeHandler = (e) => {
 		setValues({ ...values, [e.target.name]: e.target.value });
@@ -51,8 +52,9 @@ const ProjectUpdate = () => {
 		setLoading(true);
 		updateProject({ variables: { input: values } });
 		setLoading(false);
-		toast.success('Les informations du projet sont mise à jour avec succès !');
+		toast.success("Les informations du projet sont mise à jour avec succès !");
 	};
+
 
 	const updateForm = () => (
 		<form onSubmit={onSubmitHandler}>
@@ -62,7 +64,7 @@ const ProjectUpdate = () => {
 					value={name || ''}
 					name="name"
 					type="text"
-					placeholder={!name ? 'Enter le nom du projet' : undefined}
+					placeholder={!name ? "Enter le nom du projet" : undefined}
 					onChange={onChangeHandler}
 					className="form-control"
 					disabled={loading}
@@ -75,7 +77,9 @@ const ProjectUpdate = () => {
 					name="description"
 					rows="5"
 					className="md-textarea form-control"
-					placeholder={!description ? "Ecrivez une description digne d'un Dev et non d'un Admin :)" : undefined}
+					placeholder={
+						!description ? "Ecrivez une description digne d'un Dev et non d'un Admin :)" : undefined
+					}
 					maxLength="150"
 					disabled={loading}
 				/>
@@ -91,8 +95,8 @@ const ProjectUpdate = () => {
 		<div className="container p-5">
 			{loading ? <h4 className="text-danger">Chargement en cours...</h4> : <h4>Administration des projets</h4>}
 			{updateForm()}
-			<hr />
-			<TimerView />
+            <hr/>
+            <TimerView />
 			<hr />
 			{singleProject && JSON.stringify(singleProject)}
 		</div>

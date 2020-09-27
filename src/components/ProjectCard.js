@@ -13,10 +13,10 @@ const ProjectCard = ({ project, handleDelete = (f) => f, showUpdateButton = fals
 				</h5>
 				<p className="card-text">{description}</p>
 				<hr />
-				<h6 className="card-text">Tâches associées à ce projet</h6>
-				<div className="card-text">
+				{/* <h6 className="card-text">Tâches associées à ce projet</h6> */}
+				{/* <div className="card-text">
 					{tasks && tasks.map((task) => <small key={task._id}>{JSON.stringify(task.title)}</small>)}
-				</div>
+				</div> */}
 				<div className="row mt-5 mb-1">
 					<div className="col-md-6 p-3">
 						{showDeleteButton && (
