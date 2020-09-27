@@ -3,20 +3,15 @@ import React from 'react';
 const AuthForm = ({
 	email = '',
 	password = '',
-	newPassword = '',
-	oldPassword = '',
 	setEmail = (f) => f,
 	setPassword = (f) => f,
-	setNewPassword = (f) => f,
-	setOldPassword = (f) => f,
 	showPasswordInput = true,
 	loading = false,
 	onSubmitHandler = (f) => f,
 	btnText,
 	disabledBtn = true,
 	disabledEmailInput = false,
-	hideEmailInput = false,
-	isPasswordUpdatable = false
+	hideEmailInput = false
 }) => {
 	return (
 		<form onSubmit={onSubmitHandler}>
@@ -37,26 +32,13 @@ const AuthForm = ({
 			)}
 			{showPasswordInput && (
 				<div className="form-group">
-					<label>{isPasswordUpdatable ? 'Nouveau mot de passe' : 'Mot de passe'}</label>
+					<label>Mot de passe</label>
 					<input
-						value={isPasswordUpdatable ? newPassword : password}
-						name={isPasswordUpdatable ? 'newPassword' : 'password'}
+						value={password}
+						name="password"
 						type="password"
-						placeholder={isPasswordUpdatable ? 'Entrer votre nouveau mot de passe' : 'Entrer votre mot de passe'}
-						onChange={isPasswordUpdatable ? (e) => setNewPassword(e.target.value) : (e) => setPassword(e.target.value)}
-						className="form-control"
-					/>
-				</div>
-			)}
-			{isPasswordUpdatable && (
-				<div className="form-group">
-					<label>Ancien mot de passe</label>
-					<input
-						value={oldPassword}
-						name="oldPassword"
-						type="password"
-						placeholder="Entrer votre ancien mot de passe"
-						onChange={(e) => setOldPassword(e.target.value)}
+						placeholder="Entrer votre un mot de passe"
+						onChange={(e) => setPassword(e.target.value)}
 						className="form-control"
 					/>
 				</div>

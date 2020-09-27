@@ -63,7 +63,7 @@ export const SINGLE_PROJECT = gql`
 
 // query a single timer infos
 export const SINGLE_Timer = gql`
-    query singleTimer($timerId: String!) {
+    query singleProject($timerId: String!) {
         singleTimer(timerId: $timerId) {
             ...timerInfos
         }

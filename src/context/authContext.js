@@ -23,29 +23,31 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 	const [ state, dispatch ] = useReducer(firebaseReducer, initialState);
 
-	useEffect(() => {
-		const unsubscribe = auth().onAuthStateChanged(async (user) => {
-			if (user) {
-				const idTokenResult = await user.getIdTokenResult();
-				dispatch({
-					type: 'LOGGED_IN_USER',
-					payload: {
-						email: user.email,
-						token: idTokenResult.token
-					}
-				});
-			} else {
-				dispatch({
-					type: 'LOGGED_IN_USER',
-					payload: null
-				});
-			}
-		});
-		// call clean method to ensure that state won't lose if component is unmount and mounted again
-		return () => unsubscribe = async => {};
-	}, []);
+    useEffect(() => {
+	const unsubscribe = auth().onAuthStateChanged(async (user) => {
 
-	const value = { state, dispatch };
+		if (user) {
+
+            const idTokenResult = await user.getIdTokenResult();
+			dispatch({
+				type: 'LOGGED_IN_USER',
+				payload: {
+					email: user.email,
+					token: idTokenResult.token
+				}
+			});
+		} else {
+			dispatch({
+				type: 'LOGGED_IN_USER',
+				payload: null
+			});
+		}
+	});
+    // call clean method to ensure that state won't lose if component is unmount and mounted again
+    return () => unsubscribe();
+}, []);
+
+    const value = { state, dispatch };
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
