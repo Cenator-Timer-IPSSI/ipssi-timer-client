@@ -31,7 +31,6 @@ const PasswordUpdate = () => {
 				setPassword={setPassword}
 				loading={loading}
 				btnText="Mettre à jour"
-				disabledBtn={!password || loading}
 				onSubmitHandler={onSubmitHandler}
 				showPasswordInput
 				hideEmailInput

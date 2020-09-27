@@ -1,5 +1,4 @@
-import React, { useState, useMemo, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useMemo } from 'react';
 
 // Apollo imports --
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -48,12 +47,6 @@ const Profile = () => {
 					bio: data.profile.bio,
 					images: omitDeep(data.profile.images, [ '__typename' ])
 				});
-
-				//TODO: Fix warning messages when code are executed - We dispatch new infos to global state
-				/* dispatch({
-					type: 'LOGGED_IN_USER',
-					payload: { ...data['profile'] }
-				});*/
 			}
 		},
 		[ data ]
@@ -62,7 +55,6 @@ const Profile = () => {
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
 		setLoading(true);
-		//console.log(profile);
 		try {
 			// execute the mutation responsible to update user profile infos
 			setLoading(true);
@@ -99,7 +91,7 @@ const Profile = () => {
 				onChangeHandler={onChangeHandler}
 				loading={loading}
 			/>
-			<a className="btn btn-raised btn-primary" href="/password/update">Changer mot de passe</a>
+			<a className="btn btn-raised btn-primary" href="/password/update">Changer votre mot de passe</a>
 		</div>
 	);
 };

@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useLazyQuery, useQuery, useMutation } from '@apollo/react-hooks';
+import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { CREATE_TIMER } from '../../graphql/mutations';
 import { useParams } from 'react-router-dom';
 import { SINGLE_PROJECT, ALL_TIMERS } from '../../graphql/queries';
@@ -17,17 +17,17 @@ const TimerView = () => {
 	});
 
 	const [ createTimer ] = useMutation(CREATE_TIMER);
-    const { data: allLoggedTimers } = useLazyQuery(ALL_TIMERS);
-	const [ getSingleProject, { data: singleProject } ] = useLazyQuery(SINGLE_PROJECT);
+	const { data: allLoggedTimers } = useLazyQuery(ALL_TIMERS);
+	const [ getSingleProject /*, { data: singleProject  }*/ ] = useLazyQuery(SINGLE_PROJECT);
 
 	// For routeing
 	const { projectid } = useParams();
-	const { title, description, loggedTime } = values;
+	const { title, description /* loggedTime */ } = values;
 
-	/* 	useEffect(() => {
+	useEffect(() => {
 		console.log(projectid);
 		getSingleProject({ variables: { projectId: projectid } });
-	}, []); */
+	}, [projectid, getSingleProject]);
 
 	const renderStartButton = () => {
 		return (
@@ -49,7 +49,7 @@ const TimerView = () => {
 		setValues({ ...values, [e.target.name]: e.target.value });
 	};
 
-	const onSubmitHandler = (e) => {
+	/* const onSubmitHandler = (e) => {
 		e.preventDefault();
 		setLoading(true);
 		try {
@@ -61,7 +61,7 @@ const TimerView = () => {
 		setLoading(false);
 		toast.success('Une nouvelle tâche a été créée avec succès !');
 	};
-
+ */
 	const logTimer = (e) => {
 		e.preventDefault();
 		setLoading(true);
@@ -102,9 +102,7 @@ const TimerView = () => {
 						name="description"
 						rows="5"
 						className="md-textarea form-control"
-						placeholder={
-							!description ? "Ecrivez une description digne d'un Dev et non d'un Admin :)" : undefined
-						}
+						placeholder={!description ? "Ecrivez une description digne d'un Dev et non d'un Admin :)" : undefined}
 						maxLength="150"
 						disabled={loading}
 					/>
@@ -145,10 +143,9 @@ const TimerView = () => {
 		<div style={{ flex: 1 }}>
 			<h4 className="py-5">Démarrer un nouvelle tâche</h4>
 			{timer > 0 ? renderRunningTimer() : renderStartButton()}
-        <hr/>
-        {JSON.stringify(allLoggedTimers && allLoggedTimers.allTimersPerProject)}
+			<hr />
+			{JSON.stringify(allLoggedTimers && allLoggedTimers.allTimersPerProject)}
 		</div>
-
 	);
 };
 

@@ -29,7 +29,7 @@ const UpdateProfileForm = ({ username, name, email, bio, onSubmitHandler, onChan
 			</div>
 			<div className="form-group">
 				<label>Adresse Email</label>
-				<input type="email" className="form-control" name="email" value={email} disabled />
+				<input type="email" className="form-control" name="email" value={email || ""} disabled />
 			</div>
 			<div className="form-group">
 				<label>Bio</label>
