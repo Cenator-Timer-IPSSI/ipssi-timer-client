@@ -99,6 +99,7 @@ const Profile = () => {
 				onChangeHandler={onChangeHandler}
 				loading={loading}
 			/>
+			<a className="btn btn-raised btn-primary" href="/password/update">Changer mon mot de passe</a>
 		</div>
 	);
 };

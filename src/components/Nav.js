@@ -23,7 +23,7 @@ const Nav = () => {
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
 			<Link className="navbar-brand" to="/" type="button" style={{ padding: 0 }}>
-				<img src={logo} alt="IPSSI Project Time Manager logo" style={{ height: "4rem" }}/>
+				<img src={logo} alt="Cenator Timer logo" style={{ height: "4rem" }}/>
 			</Link>
 			<button
 				className="navbar-toggler"

@@ -47,7 +47,7 @@ const Team = () => {
 		setValues({ users: usersFomDb && [ ...usersFomDb.allUsers ] });
 	}, []); */
 
-	/* 	useMemo(
+	useMemo(
 		() => {
 			if (users) {
 				setValues({
@@ -57,7 +57,7 @@ const Team = () => {
 			}
 		},
 		[ users ]
-	); */
+	);
 
 	const [ deleteTeam ] = useMutation(DELETE_TEAM, {
 		update: ({ data }) => {

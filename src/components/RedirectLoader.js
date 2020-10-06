@@ -19,7 +19,7 @@ const RedirectLoader = ({ path }) => {
 
     return (
         <div className="container-fluid p-5 text-center">
-            <h4 className="text-info">Vous allez être redirigé à la page d'accueil dans {counter} minutes</h4>
+            <h4 className="text-info">Vous allez être redirigé à la page d'accueil dans {counter} secondes</h4>
         </div>
     )
 };
