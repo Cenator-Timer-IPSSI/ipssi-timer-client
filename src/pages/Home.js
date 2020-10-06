@@ -7,12 +7,10 @@ const Home = () => {
 	return (
     <div>
         <div className="text-center">
-          <button className="btn btn-raised btn-secondary" style={{ width:"50%" }}>
+          <a href="./teams" className="btn btn-raised btn-secondary" style={{ width:"50%" }}>
             Voir les équipes
-          </button>
-          <button className="btn btn-raised btn-secondary" style={{ width:"50%" }}>
-            Voir les projets
-          </button>
+          </a>
+          <a href="./projects" className="btn btn-raised btn-secondary" style={{ width:"50%" }}>Voir les projets</a>
         </div>
   		<div className="container pt-5">
              <div className="jumbotron text-center h1">
