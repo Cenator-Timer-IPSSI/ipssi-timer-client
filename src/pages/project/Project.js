@@ -133,7 +133,7 @@ const Project = () => {
 						disabled={loading}
 					/>
 				</div>
-				<button className="btn btn-raised btn-primary" type="submit" disabled={loading || !name}>
+				<button className="btn btn-raised btn-primary" type="submit" disabled={loading || !name || !description}>
 					Créer le projet
 				</button>
 			</form>

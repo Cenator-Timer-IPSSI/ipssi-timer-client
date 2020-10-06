@@ -97,8 +97,8 @@ const ProjectUpdate = () => {
 			{updateForm()}
             <hr/>
             <TimerView />
-			<hr />
-			{singleProject && JSON.stringify(singleProject)}
+			{/* <hr /> */}
+			{/* {singleProject && JSON.stringify(singleProject)} */}
 		</div>
 	);
 };
