@@ -2,7 +2,7 @@ import React, { useContext, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { auth } from 'firebase';
 import { AuthContext } from '../context/authContext';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 const Nav = () => {
 	const { state: { user }, dispatch } = useContext(AuthContext);
 	let history = useHistory();
@@ -23,7 +23,7 @@ const Nav = () => {
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
 			<Link className="navbar-brand" to="/" type="button" style={{ padding: 0 }}>
-				<img src={logo} alt="Cenator Timer logo" style={{ height: "4rem" }}/>
+				<img src={logo} alt="Cenator Timer logo" style={{ height: "6rem" }}/>
 			</Link>
 			<button
 				className="navbar-toggler"
