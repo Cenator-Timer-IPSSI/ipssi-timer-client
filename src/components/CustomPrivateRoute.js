@@ -31,12 +31,7 @@ const CustomPrivateRoute = ({children,  ...rest }) => {
                         Projets
                     </Link>
                 </li>
-                <hr />
-                <li className="nav-item">
-                    <Link className="nav-link" to="/password/update">
-                        Mot de passe
-                    </Link>
-                </li>
+                <hr/>
             </ul>
         </nav>
     );
