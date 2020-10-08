@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 // Apollo imports --
 import ApolloClient from 'apollo-client';
@@ -37,9 +37,14 @@ import Project from './pages/project/Project';
 import ProjectAdd from './pages/project/ProjectAdd';
 import ProjectView from './pages/project/ProjectView';
 import ProjectUpdate from './pages/project/ProjectUpdate';
+import Header from './components/ui/Header';
+import Footer from './components/ui/Footer';
 
 const App = () => {
 	const { state: { user } } = useContext(AuthContext);
+
+	const [ value, setValue ] = useState(0);
+	const [ selectedIndex, setSelectedIndex ] = useState(0);
 
 	// create http link
 	const httpLink = new HttpLink({
@@ -65,7 +70,8 @@ const App = () => {
 
 	return (
 		<ApolloProvider client={client}>
-			<Nav />
+			<Header value={value} setValue={setValue} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+			{/* <Nav /> */}
 			<ToastContainer />
 			<Switch>
 				<Route exact path="/" exact component={Home} />
@@ -85,6 +91,7 @@ const App = () => {
 				<CustomPrivateRoute path="/project/:projectid" exact component={ProjectView} />
 				<CustomPrivateRoute path="/project/update/:projectid" exact component={ProjectUpdate} />
 			</Switch>
+			<Footer value={value} setValue={setValue} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
 		</ApolloProvider>
 	);
 };
