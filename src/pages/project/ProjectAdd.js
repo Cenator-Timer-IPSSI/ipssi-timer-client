@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/authContext';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useHistory } from 'react-router-dom';
 import { CREATE_PROJECT, DELETE_PROJECT } from '../../graphql/mutations';
 import { ALL_PROJECTS } from '../../graphql/queries';
 import ProjectCard from '../../components/ProjectCard';
@@ -13,6 +14,7 @@ const initialState = {
 const Project = () => {
 	const [ values, setValues ] = useState(initialState);
 	const [ loading, setLoading ] = useState(false);
+	let history = useHistory();
 
 	// state values
 	const { name, description } = values;
@@ -88,6 +90,7 @@ const Project = () => {
 		setValues(initialState);
 		setLoading(false);
 		toast.success('Le projet a été créée avec succès!');
+		history.push('/projects');
 	};
 
 	const onChangeHandler = (e) => {
@@ -105,31 +108,50 @@ const Project = () => {
 		}
 		setValues({ users: users, ...values });
 	};
+
+	const createProjectForm = () => {
+		return (
+			<form onSubmit={onSubmitHandler}>
+				<div className="form-group">
+					<label>Nom du projet</label>
+					<input
+						value={name || ''}
+						name="name"
+						type="text"
+						placeholder="Entrer le nom du projet"
+						onChange={onChangeHandler}
+						className="form-control"
+						disabled={loading}
+					/>
+				</div>
+				<div className="form-group">
+					<textarea
+						value={description}
+						onChange={onChangeHandler}
+						name="description"
+						rows="5"
+						className="md-textarea form-control"
+						placeholder="Une description cool et brève"
+						maxLength="150"
+						disabled={loading}
+					/>
+				</div>
+				<button className="btn btn-raised btn-primary" type="submit" disabled={loading || !name || !description}>
+					Créer le projet
+				</button>
+			</form>
+		);
+	};
 	return (
-		<div className="container">
-			<div className="text-right">
+		<div className="container p-5">
+			<div className="row">
 				{loading ? (
 					<h4 className="text-info">Chargement en cours...</h4>
 				) : (
-					<a href="/project/add" className="btn btn-raised btn-primary"> Ajouter un projet</a>
+					<h4 className="py-5">Créer un nouveau projet</h4>
 				)}
 			</div>
-			<hr />
-			{/* {projects && JSON.stringify(projects)} */}
-			{/* Need to make a check otherwise users.allUsers provoke an error */}
-			<div className="row">
-				{projects &&
-					projects.projectsCreatedByUser.map((project) => (
-						<div className="col-sm-6 p-3" key={project._id}>
-							<ProjectCard
-								handleDelete={handleDelete}
-								project={project}
-								showDeleteButton={true}
-								showUpdateButton={true}
-							/>
-						</div>
-					))}
-			</div>
+			{createProjectForm()}
 		</div>
 	);
 };
