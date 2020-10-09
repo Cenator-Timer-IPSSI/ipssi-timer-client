@@ -120,7 +120,7 @@ const Project = () => {
 			<div className="row">
 				{projects &&
 					projects.projectsCreatedByUser.map((project) => (
-						<div className="col-sm-6 p-3" key={project._id}>
+						<div className="col-sm-6 col-md-7 col-lg-4 mt-4" key={project._id}>
 							<ProjectCard
 								handleDelete={handleDelete}
 								project={project}
