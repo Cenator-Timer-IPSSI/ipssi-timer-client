@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 
 // Apollo imports --
 import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 
 // components imports --
 import Nav from './components/Nav';
@@ -46,6 +46,7 @@ const App = () => {
 	const [ value, setValue ] = useState(0);
 	const [ selectedIndex, setSelectedIndex ] = useState(0);
 
+
 	// create http link
 	const httpLink = new HttpLink({
 		uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
@@ -70,7 +71,12 @@ const App = () => {
 
 	return (
 		<ApolloProvider client={client}>
-			<Header value={value} setValue={setValue} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+			<Header
+				value={value}
+				setValue={setValue}
+				selectedIndex={selectedIndex}
+				setSelectedIndex={setSelectedIndex}
+			/>
 			{/* <Nav /> */}
 			<ToastContainer />
 			<Switch>

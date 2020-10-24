@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import AuthForm from '../../components/forms/AuthForm';
+import AuthForm from '../../components/forms/AuthForm.jsx';
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
 import firebase from 'firebase';
 import { useHistory } from 'react-router-dom';
+import Spinner from '../../components/ui/Spinner/Spinner.jsx';
 
 const PasswordUpdate = () => {
 	const [ newPassword, setNewPassword ] = useState('');
@@ -51,10 +52,26 @@ const PasswordUpdate = () => {
 				console.log(error.message);
 			});
 	};
+	let authForm = (
+		<AuthForm
+			newPassword={newPassword}
+			oldPassword={oldPassword}
+			setNewPassword={setNewPassword}
+			setOldPassword={setOldPassword}
+			loading={loading}
+			btnText="Mettre à jour"
+			onSubmitHandler={onSubmitHandler}
+			showPasswordInput
+			hideEmailInput
+			disabledBtn={!newPassword || !oldPassword || loading}
+			isPasswordUpdatable
+			authText="Modification de mot de passe"
+		/>
+	);
+	if (loading) authForm = <Spinner text="Modification de mot de passe" />;
+	return authForm;
+	/* <div className="container p-5">
 
-	return (
-		<div className="container p-5">
-			{loading ? <h4 className="text-info">En cours ...</h4> : <h4 className="py-5">Modification de mot de passe</h4>}
 			<AuthForm
 				newPassword={newPassword}
 				oldPassword={oldPassword}
@@ -62,15 +79,14 @@ const PasswordUpdate = () => {
 				setOldPassword={setOldPassword}
 				loading={loading}
 				btnText="Mettre à jour"
-				disabledBtn={!newPassword || loading}
 				onSubmitHandler={onSubmitHandler}
 				showPasswordInput
 				hideEmailInput
 				disabledBtn={!newPassword || !oldPassword || loading}
 				isPasswordUpdatable
+                authText="Modification de mot de passe"
 			/>
-		</div>
-	);
+		</div> */
 };
 
 export default PasswordUpdate;

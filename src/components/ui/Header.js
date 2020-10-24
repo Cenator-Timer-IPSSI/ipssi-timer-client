@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useContext, useMemo } from 'react';
 import {
 	AppBar,
 	Toolbar,
@@ -13,15 +13,22 @@ import {
 	IconButton,
 	List,
 	ListItem,
-	ListItemText
+	ListItemText,
+	ListItemAvatar
 } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import logo from '../../assets/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useStyles } from './Header-styles';
-    
+import { AuthContext } from '../../context/authContext';
+import { auth } from 'firebase';
+import CustomAvatar from './CustomAvatar/CustomAvatar';
+import { useQuery } from '@apollo/react-hooks';
+import { USER_PROFILE } from '../../graphql/queries';
+import omitDeep from 'omit-deep';
+
 function ElevationScroll(props) {
 	const { children } = props;
 	const trigger = useScrollTrigger({
@@ -38,11 +45,36 @@ const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.down('md'));
+	const { data } = useQuery(USER_PROFILE);
+	const [ userInfos, setUserInfos ] = useState({
+		name: '',
+		username: '',
+		email: '',
+		bio: '',
+		images: []
+	});
+
+	const [ loading, setLoading ] = useState(false);
 
 	const [ anchorEl, setAnchorEl ] = useState(null);
 	const [ openMenu, setOpenMenu ] = useState(false);
 	const [ openDrawer, setOpenDrawer ] = useState(false);
 	const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+	const { state: { user }, dispatch } = useContext(AuthContext);
+	let history = useHistory();
+
+	const logoutHandler = () => {
+		// sign out the current user
+		auth().signOut();
+
+		// clean the user on the state
+		dispatch({
+			type: 'LOGGED_IN_USER',
+			payload: null
+		});
+		// redirect to login page
+		history.push('/login');
+	};
 
 	const toolbarList = [
 		{ name: 'Accueil', link: '/', activeIndex: 0 },
@@ -107,6 +139,27 @@ const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
 		[ value, setValue, selectedIndex, setSelectedIndex, toolbarList, menuList ]
 	);
 
+	useEffect(
+		() => {
+			if (data) {
+				setUserInfos({
+					username: data.profile.username,
+					name: data.profile.name,
+					email: data.profile.email,
+					bio: data.profile.bio,
+					images: omitDeep(data.profile.images, [ '__typename' ])
+				});
+				// console.log(userInfos.images);
+				//TODO: Fix warning messages when code are executed - We dispatch new infos to global state
+				// dispatch({
+				// type: 'LOGGED_IN_USER',
+				// payload: { ...data['profile'] }
+				// });
+			}
+		},
+		[ data ]
+	);
+    const { url, public_url} = userInfos.images;
 	const drawer = (
 		<Fragment>
 			<SwipeableDrawer
@@ -119,6 +172,27 @@ const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
 			>
 				<div className={classes.marginToolbar} />
 				<List disablePadding>
+					{!user ? null : (
+						<ListItem
+							onClick={() => {
+								setOpenDrawer(false);
+							}}
+							divider
+							button
+							classes={{ undefined }}
+							component={Link}
+							to="/profile"
+							selected={undefined}
+						>
+							<ListItemAvatar>
+								<CustomAvatar imgSrc={url} altText={`Photo de ${userInfos.name}`} />
+							</ListItemAvatar>
+							<ListItemText className={classes.drawerItem} disableTypography>
+								{userInfos.name}
+							</ListItemText>
+						</ListItem>
+					)}
+
 					{toolbarList.map((item, index) => (
 						<ListItem
 							key={`${item.name.trim()}${index}`}
@@ -150,26 +224,34 @@ const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
 						to="/login"
 						selected={value === 5}
 					>
-						<ListItemText className={classes.drawerItem} disableTypography>
-							Se connecter
-						</ListItemText>
+						{!user ? (
+							<ListItemText className={classes.drawerItem} disableTypography>
+								Se connecter
+							</ListItemText>
+						) : (
+							<ListItemText className={classes.drawerItemDisconnect} disableTypography onClick={logoutHandler}>
+								Se déconnecter
+							</ListItemText>
+						)}
 					</ListItem>
-					<ListItem
-						onClick={() => {
-							setOpenDrawer(false);
-							setValue(5);
-						}}
-						divider
-						button
-						classes={{ root: classes.drawerAuthItem, selected: classes.drawerItemSelected }}
-						component={Link}
-						to="/register"
-						selected={value === 5}
-					>
-						<ListItemText className={classes.drawerItem} disableTypography>
-							Créer un compte
-						</ListItemText>
-					</ListItem>
+					{!user && (
+						<ListItem
+							onClick={() => {
+								setOpenDrawer(false);
+								setValue(5);
+							}}
+							divider
+							button
+							classes={{ root: classes.drawerAuthItem, selected: classes.drawerItemSelected }}
+							component={Link}
+							to="/register"
+							selected={value === 5}
+						>
+							<ListItemText className={classes.drawerItem} disableTypography>
+								Créer un compte
+							</ListItemText>
+						</ListItem>
+					)}
 				</List>
 			</SwipeableDrawer>
 			<IconButton disableRipple onClick={() => setOpenDrawer(!openDrawer)} className={classes.drawerIconContainer}>
@@ -194,12 +276,33 @@ const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
 					/>
 				))}
 			</Tabs>
-			<Button variant="contained" color="secondary" className={classes.authBtn} component={Link} to="/login">
-				Se connecter
-			</Button>
-			<Button variant="contained" color="secondary" className={classes.authBtn} component={Link} to="/register">
-				Créer un compte
-			</Button>
+
+			{!user ? (
+				<Button variant="contained" color="secondary" className={classes.authBtn} component={Link} to="/login">
+					Se connecter
+				</Button>
+			) : (
+				<Button variant="contained" color="secondary" className={classes.authBtn} component={Link} to="/profile">
+					{user.username ? user.username : user.email.split('@')[0]}
+				</Button>
+			)}
+
+			{!user ? (
+				<Button variant="contained" color="secondary" className={classes.authBtn} component={Link} to="/register">
+					Créer un compte
+				</Button>
+			) : (
+				<Button
+					variant="contained"
+					color="secondary"
+					className={classes.authBtn}
+					component={Link}
+					onClick={logoutHandler}
+				>
+					Se Déconnecter
+				</Button>
+			)}
+
 			<Menu
 				id="simple-menu"
 				anchorEl={anchorEl}

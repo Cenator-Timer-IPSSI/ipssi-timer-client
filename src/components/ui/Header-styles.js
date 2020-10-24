@@ -71,6 +71,21 @@ export const useStyles = makeStyles((theme) => ({
 		color: 'white',
 		'&:hover': {
 			opacity: 1
+		},
+		[theme.breakpoints.down('sm')]: {
+
+		}
+	},
+	drawerItemDisconnect: {
+		...theme.typography.opacityTab,
+		color: '#f00',
+		// backgroundColor: "#f00",
+		'&:hover': {
+			opacity: 1
+		},
+		[theme.breakpoints.down('sm')]: {
+			// fontSize: "12px"
+			fontWeight: 'normal'
 		}
 	},
 	drawerItemSelected: {

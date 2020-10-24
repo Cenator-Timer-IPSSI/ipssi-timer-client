@@ -2,7 +2,7 @@ import { Button, Grid, makeStyles, Typography, useTheme } from '@material-ui/cor
 import React from 'react';
 import Lottie from 'react-lottie';
 import animationData from '../../animations/landinganimation/data';
-import ButtonArrow from '../ButtonArrow';
+import ButtonArrow from '../ui/ButtonArrow';
 import CustomSoftwareIcon from '../../assets/Custom Software Icon.svg';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 		...theme.typography.estimateBtn,
 		backgroundColor: theme.palette.common.orange,
 		borderRadius: 50,
-		width: 145,
+		width: 175,
 		height: 45,
 		marginRight: 40,
 		textShadow: '1px 1px 2px #000',
@@ -31,17 +31,17 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '1em'
 	},
 	learnMoreBtnHeroBlock: {
-        ...theme.typography.learnMoreBtn,
+		...theme.typography.learnMoreBtn,
 		width: 145,
 		height: 45,
-		fontSize: '0.9rem',
+		fontSize: '0.9rem'
 	},
-    learnMoreBtnServicesBlock: {
-        ...theme.typography.learnMoreBtn,
+	learnMoreBtnServicesBlock: {
+		...theme.typography.learnMoreBtn,
 		height: 35,
 		fontSize: '0.7rem',
-        padding: 5
-    },
+		padding: 5
+	},
 	mainContainer: {
 		marginTop: '5em',
 		[theme.breakpoints.down('md')]: {
@@ -58,14 +58,13 @@ const useStyles = makeStyles((theme) => ({
 			marginLeft: 0
 		}
 	},
-    specialText: {
-        color: theme.palette.common.orange,
-        fontFamily: "Pacifico"
-    },
-    subtitle: {
-        marginBottom: "1em"
-    }
-
+	specialText: {
+		color: theme.palette.common.orange,
+		fontFamily: 'Pacifico'
+	},
+	subtitle: {
+		marginBottom: '1em'
+	}
 }));
 
 const LandingPage = () => {
@@ -88,20 +87,20 @@ const LandingPage = () => {
 				<Grid container direction="row" justify="flex-end" alignItems="center">
 					<Grid item sm className={classes.heroTextContainer}>
 						<Typography variant="h2" align="center">
-							Bringing West Coast Technology <br /> to the midwest
+							Gérer vos projets en toute simplicité
 						</Typography>
 						<Grid container justify="center" className={classes.btnContainer}>
 							<Grid item>
 								<Button variant="contained" className={classes.estimateBtn}>
-									Free Estimate
+									Estimation gratuite
 								</Button>
 							</Grid>
 							<Grid item>
 								<Button variant="outlined" className={classes.learnMoreBtnHeroBlock}>
 									<Typography component="span" style={{ marginRight: 10 }}>
-										Learn More
+										En savoir plus
 									</Typography>
-									<ButtonArrow fill={theme.palette.common.blue} />
+									<ButtonArrow fill={theme.palette.common.blue} width={"1.5rem"} />
 								</Button>
 							</Grid>
 						</Grid>
@@ -116,21 +115,23 @@ const LandingPage = () => {
 				{/*--- Services Block */}
 				<Grid container direction="row">
 					<Grid item>
-						<Typography variant="h4">Custom Software Development</Typography>
-						<Typography variant="subtitle1" className={classes.subtitle}>Save Energy. Save Time. Save Money.</Typography>
+						<Typography variant="h4">Une application de gestion de projets</Typography>
+						<Typography variant="subtitle1" className={classes.subtitle}>
+							Gagner de l'énergie. Gagner du temps. Gagner de l'argent.
+						</Typography>
 						<Typography variant="subtitle1">
-							Complete digital solutions, from investigation to <span className={classes.specialText}>celebration.</span>
+							Une solution digitale pour gérer vos projets <span className={classes.specialText}>gratuitement.</span>
 						</Typography>
 						<Button variant="outlined" className={classes.learnMoreBtnServicesBlock}>
 							<Typography component="span" style={{ marginRight: 10 }}>
-								Learn More
+                                En savoir plus
 							</Typography>
 							<ButtonArrow fill={theme.palette.common.blue} />
 						</Button>
 					</Grid>
-                    <Grid item>
-                        <img src={CustomSoftwareIcon} alt="custom software icon"/>
-                    </Grid>
+					<Grid item>
+						<img src={CustomSoftwareIcon} alt="custom software icon" />
+					</Grid>
 				</Grid>
 			</Grid>
 		</Grid>

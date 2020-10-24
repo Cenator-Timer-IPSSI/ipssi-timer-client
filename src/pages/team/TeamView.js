@@ -5,7 +5,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { CREATE_TEAM, DELETE_TEAM } from '../../graphql/mutations';
 import { ALL_TEAMS } from '../../graphql/queries';
 import TeamCard from '../../components/TeamCard';
-import TeamForm from '../../components/forms/TeamForm';
+import TeamForm from '../../components/forms/TeamForm.jsx';
 import omitDeep from 'omit-deep';
 
 const initialState = {

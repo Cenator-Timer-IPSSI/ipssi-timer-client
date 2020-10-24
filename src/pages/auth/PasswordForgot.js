@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import AuthForm from '../../components/forms/AuthForm';
+import AuthForm from '../../components/forms/AuthForm.jsx';
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
+import Spinner from '../../components/ui/Spinner/Spinner.jsx';
 
 const PasswordForgot = () => {
 	const [ email, setEmail ] = useState('');
@@ -20,12 +21,11 @@ const PasswordForgot = () => {
 			.sendPasswordResetEmail(email, config)
 			.then(() => {
 				setEmail('');
-                setLoading(false);
+				setLoading(false);
 
 				toast.success(
 					`Un email vous a été envoyé à ${email}. Cliquer sur le lien pour réinitialiser votre mot de passe.`
 				);
-
 			})
 			.catch((error) => {
 				setLoading(false);
@@ -34,8 +34,20 @@ const PasswordForgot = () => {
 			});
 	};
 
-	return (
-		<div className="container p-5">
+	let authForm = (
+		<AuthForm
+			email={email}
+			setEmail={setEmail}
+			loading={loading}
+			btnText="Réinitialiser"
+			disabledBtn={!email || loading}
+			onSubmitHandler={onSubmitHandler}
+			authText="Réinitialisation de mot de passe"
+		/>
+	);
+	if (loading) authForm = <Spinner text="Chargement en cours..." />;
+	return authForm;
+	/* <div className="container p-5">
 			{loading ? <h4 className="text-info">En cours ...</h4> : <h4>Réinitialisation de mot de passe</h4>}
 			<AuthForm
 				email={email}
@@ -44,9 +56,9 @@ const PasswordForgot = () => {
 				btnText="Réinitialiser"
 				disabledBtn={!email || loading}
                 onSubmitHandler={onSubmitHandler}
+                authText="Réinitialisation de mot de passe"
 			/>
-		</div>
-	);
+		</div> */
 };
 
 export default PasswordForgot;

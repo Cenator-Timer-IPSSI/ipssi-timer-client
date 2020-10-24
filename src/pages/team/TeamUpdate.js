@@ -4,7 +4,7 @@ import { useLazyQuery, useQuery, useMutation } from '@apollo/react-hooks';
 import { SINGLE_TEAM, ALL_USERS } from '../../graphql/queries';
 import { UPDATE_TEAM } from '../../graphql/mutations';
 import { useParams } from 'react-router-dom';
-import TeamForm from '../../components/forms/TeamForm';
+import TeamForm from '../../components/forms/TeamForm.jsx';
 import omitDeep from 'omit-deep';
 import TimerView from '../timer/TimerView';
 

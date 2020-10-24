@@ -1,6 +1,17 @@
+import { TextareaAutosize } from '@material-ui/core';
 import React from 'react';
+import CustomButton from '../ui/CustomButton/CustomButton';
 
-const UpdateProfileForm = ({ username, name, email, bio, onSubmitHandler, onChangeHandler, loading }) => {
+const UpdateProfileForm = ({
+	username,
+	name,
+	email,
+	bio,
+	onSubmitHandler,
+	onChangeHandler,
+	loading,
+	disabledBtn = false
+}) => {
 	return (
 		<form onSubmit={onSubmitHandler}>
 			<div className="form-group">
@@ -33,7 +44,7 @@ const UpdateProfileForm = ({ username, name, email, bio, onSubmitHandler, onChan
 			</div>
 			<div className="form-group">
 				<label>Bio</label>
-				<textarea
+				{/* <textarea
 					type="text"
 					className="form-control"
 					name="bio"
@@ -41,12 +52,29 @@ const UpdateProfileForm = ({ username, name, email, bio, onSubmitHandler, onChan
 					placeholder="votre biographie"
 					onChange={onChangeHandler}
 					disabled={loading}
+				/> */}
+				<TextareaAutosize
+					name="bio"
+					rowsMax={4}
+					aria-label="maximum height"
+					placeholder="votre biographie"
+					onChange={onChangeHandler}
+					disabled={loading}
+					defaultValue={bio || ''}
+					value={bio}
 				/>
 			</div>
 
-			<button className="btn btn-raised btn-primary" disabled={!email || loading}>
-				Mettre é jour mon profil
-			</button>
+			{/* <button className="btn btn-raised btn-primary" disabled={!email || loading}>
+				Mettre à jour mon profil
+			</button> */}
+			<CustomButton
+				btnText={'Mettre à jour mon profil'}
+				fontSize={'small'}
+				width={'auto'}
+				color="primary"
+				disabled={!email || loading}
+			/>
 		</form>
 	);
 };

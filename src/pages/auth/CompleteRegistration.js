@@ -5,7 +5,8 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
-import AuthForm from '../../components/forms/AuthForm';
+import AuthForm from '../../components/forms/AuthForm.jsx';
+import Spinner from '../../components/ui/Spinner/Spinner';
 
 const CREATE_USER = gql`
 	mutation createUser {
@@ -81,9 +82,25 @@ const CompleteRegistration = () => {
 		}
 	};
 
-	return (
-		<div className="container p-5">
-			{loading ? <h4 className="text-info">loading</h4> : <h4>Création de compte - étape 2/2</h4>}
+	let authForm = (
+		<AuthForm
+			email={email}
+			setEmail={setEmail}
+			loading={loading}
+			showPassword={false}
+			password={password}
+			setPassword={setPassword}
+			onSubmitHandler={onSubmitHandler}
+			btnText="Terminer l'inscription"
+			disabledBtn={!email || !password || loading}
+			disabledEmailInput
+			authText="Création de compte - étape 2/2"
+		/>
+	);
+	if (loading) authForm = <Spinner text="Votre compte est en cours de création ..." />;
+	return authForm;
+	/* <div className="container p-5">
+			{loading ? <h4 className="text-info">loading...</h4> : <h4>Création de compte - étape 2/2</h4>}
             <AuthForm
 				email={email}
 				setEmail={setEmail}
@@ -95,9 +112,9 @@ const CompleteRegistration = () => {
                 btnText="Terminer l'inscription"
                 disabledBtn={!email || !password || loading}
                 disabledEmailInput
+                authText="Création de compte - étape 2/2"
 			/>
-		</div>
-	);
+		</div> */
 };
 
 export default CompleteRegistration;

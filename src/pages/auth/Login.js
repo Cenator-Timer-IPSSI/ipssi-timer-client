@@ -5,7 +5,9 @@ import { AuthContext } from '../../context/authContext';
 import { toast } from 'react-toastify';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
-import AuthForm from '../../components/forms/AuthForm';
+import AuthForm from '../../components/forms/AuthForm.jsx';
+import { Divider } from '@material-ui/core';
+import CustomButton from '../../components/ui/CustomButton/CustomButton';
 
 const CREATE_USER = gql`
 	mutation createUser {
@@ -78,31 +80,26 @@ const Login = () => {
 				history.push('./');
 			});
 		} catch (error) {
+			setLoading(false);
 			console.log(`Error ${error}`);
 			toast.error(error.message);
-			setLoading(false);
 		}
 	};
 
 	return (
-		<div className="container p-5">
-			<h4>Se connecter à mon compte</h4>
-			<button className="btn btn-raised btn-danger my-3" onClick={googleLoginHandler}>
-				Se connecter avec Google
-			</button>
-			<AuthForm
-				email={email}
-				setEmail={setEmail}
-                password={password}
-				setPassword={setPassword}
-				loading={loading}
-				showPasswordInput
-                onSubmitHandler={onSubmitHandler}
-                btnText="Se connecter"
-                disabledBtn={!email || !password || loading}
-			/>
-            <Link className="text-raised text-info float-right" to="/password/forgot">Mot de passe oublié ?</Link>
-		</div>
+		<AuthForm
+			email={email}
+			setEmail={setEmail}
+			password={password}
+			setPassword={setPassword}
+			loading={loading}
+			showPasswordInput
+			onSubmitHandler={onSubmitHandler}
+			btnText="Se connecter"
+			authText="Se connecter à mon compte"
+			disabledBtn={!email || !password || loading}
+			logInWithGoogle={googleLoginHandler}
+		/>
 	);
 };
 

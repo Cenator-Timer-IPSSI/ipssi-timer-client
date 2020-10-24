@@ -5,7 +5,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { CREATE_TEAM, DELETE_TEAM } from '../../graphql/mutations';
 import { ALL_TEAMS } from '../../graphql/queries';
 import TeamCard from '../../components/TeamCard';
-import TeamForm from '../../components/forms/TeamForm';
+import TeamForm from '../../components/forms/TeamForm.jsx';
 import omitDeep from 'omit-deep';
 
 const initialState = {
@@ -78,7 +78,7 @@ const Team = () => {
 				{loading ? (
 					<h4 className="text-info">Chargement en cours...</h4>
 				) : (
-					<a href="./teams/add" className="btn btn-raised btn-primary"> Ajouter une équipe </a>
+					<a href="/teams/add" className="btn btn-raised btn-primary"> Ajouter une équipe </a>
 				)}
 			</div>
 			<hr/>

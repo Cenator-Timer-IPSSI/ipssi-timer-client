@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
 import logo from '../assets/logo.png';
+import LandingPage from '../components/ui/LandingPage';
 
 const Home = () => {
     const { state } = useContext(AuthContext);

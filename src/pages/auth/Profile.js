@@ -1,4 +1,7 @@
+// React core --
 import React, { useState, useMemo, useContext } from 'react';
+// React router --
+import { useHistory } from 'react-router-dom';
 
 // Apollo imports --
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -7,17 +10,18 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { toast } from 'react-toastify';
 import omitDeep from 'omit-deep';
 
-// context imports --
-
 // components imports --
 import ImageUpload from '../../components/ImageUpload';
+import Spinner from '../../components/ui/Spinner/Spinner';
+import UpdateProfileForm from '../../components/forms/UpdateProfileForm.jsx';
+import CustomButton from '../../components/ui/CustomButton/CustomButton';
 
 // graphql imports --
 import { USER_PROFILE } from '../../graphql/queries';
 import { UPDATE_USER_PROFILE } from '../../graphql/mutations';
-import UpdateProfileForm from '../../components/forms/UpdateProfileForm';
 
 const Profile = () => {
+    const history = useHistory();
 	const [ profile, setProfile ] = useState({
 		name: '',
 		username: '',
@@ -85,7 +89,7 @@ const Profile = () => {
 			<div className="row">
 				<div className="col-md-12 pb-3">
 					{loading ? (
-						<h4 className="text-info">En cours...</h4>
+						<Spinner text="Chargement en cours..." />
 					) : (
 						<h4 className="py-5">Mon Profil utilisateur</h4>
 					)}
@@ -99,7 +103,14 @@ const Profile = () => {
 				onChangeHandler={onChangeHandler}
 				loading={loading}
 			/>
-			<a className="btn btn-raised btn-primary" href="/password/update">Changer mon mot de passe</a>
+			{/* <a className="btn btn-raised btn-primary" href="/password/update">Changer mon mot de passe</a> */}
+            <CustomButton
+				btnText={'Changer mon mot de passe'}
+				fontSize={'small'}
+				width={'auto'}
+				color="primary"
+                onClick={() => history.push("/password/update")}
+			/>
 		</div>
 	);
 };

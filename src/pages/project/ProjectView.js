@@ -36,13 +36,12 @@ const Project = () => {
 				});
 			}
 		},
-		[ singleProject ]
+		[ singleProject,  values]
 	);
 
 	useEffect(() => {
-		console.log(projectid);
 		getSingleProject({ variables: { projectId: projectid } });
-	}, []);
+	}, [getSingleProject, projectid]);
 
 	const onChangeHandler = (e) => {
 		setValues({ ...values, [e.target.name]: e.target.value });

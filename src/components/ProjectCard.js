@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import moment from 'moment';
 
+moment.locale('fr');
 const ProjectCard = ({ project, handleDelete = (f) => f, showUpdateButton = false, showDeleteButton = false }) => {
 	const history = useHistory();
 	const { _id, name, description, createdAt, tasks } = project;
