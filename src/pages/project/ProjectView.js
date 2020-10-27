@@ -1,17 +1,19 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useLazyQuery, useQuery, useMutation } from '@apollo/react-hooks';
-import { SINGLE_TEAM, ALL_USERS, SINGLE_PROJECT } from '../../graphql/queries';
-import { UPDATE_TEAM, UPDATE_PROJECT } from '../../graphql/mutations';
-import { useParams } from 'react-router-dom';
+import { ALL_PROJECTS, SINGLE_TEAM, ALL_USERS, SINGLE_PROJECT } from '../../graphql/queries';
+import { UPDATE_TEAM, UPDATE_PROJECT, DELETE_PROJECT } from '../../graphql/mutations';
+import { useParams, useHistory } from 'react-router-dom';
 import omitDeep from 'omit-deep';
 import TimerView from '../timer/TimerView';
 
 const ProjectUpdate = () => {
 	const [ values, setValues ] = useState({
+		_id: '',
 		name: '',
 		description: '',
 	});
+	const history = useHistory();
 	const [ getSingleProject, { data: singleProject } ] = useLazyQuery(SINGLE_PROJECT);
 	const [ updateProject ] = useMutation(UPDATE_PROJECT);
 
@@ -21,8 +23,8 @@ const ProjectUpdate = () => {
 	const { projectid } = useParams();
 
 	// Grab data inside state
-	const { name, description } = values;
-    const { data: usersFomDb } = useQuery(ALL_USERS);
+	const { _id, name, description } = values;
+  const { data: usersFomDb } = useQuery(ALL_USERS);
 
 	useMemo(
 		() => {
@@ -54,51 +56,46 @@ const ProjectUpdate = () => {
 		setLoading(false);
 		toast.success("Les informations du projet sont mise à jour avec succès !");
 	};
+	const [ deleteProject ] = useMutation(DELETE_PROJECT, {
+		update: ({ data }) => {
+			console.log('DELETE PROJECT MUTATION', data);
+			toast.info(`Le projet a été supprimé !`);
+		},
+		onError: (err) => {
+			console.log(err);
+			toast.error('Une Erreur est survenue lors de la suppression du projet !');
+		}
+	});
 
-
-	const updateForm = () => (
-		<form onSubmit={onSubmitHandler}>
-			<div className="form-group">
-				<label>Nom du Projet</label>
-				<input
-					value={name || ''}
-					name="name"
-					type="text"
-					placeholder={!name ? "Enter le nom du projet" : undefined}
-					onChange={onChangeHandler}
-					className="form-control"
-					disabled={loading}
-				/>
-			</div>
-			<div className="form-group">
-				<textarea
-					value={description || ''}
-					onChange={onChangeHandler}
-					name="description"
-					rows="5"
-					className="md-textarea form-control"
-					placeholder={
-						!description ? "Ecrivez une description digne d'un Dev et non d'un Admin :)" : undefined
-					}
-					maxLength="150"
-					disabled={loading}
-				/>
-			</div>
-
-			<button className="btn btn-raised btn-primary" type="submit" disabled={loading || !name || !description}>
-				Mettre à jour
-			</button>
-		</form>
-	);
+	const handleDelete = async (projectId) => {
+		// Ask user if he really want to delete
+		let answer = window.confirm('Voulez-vous vraiment supprimé ce projet ?');
+		if (answer) {
+			setLoading(true);
+			deleteProject({
+				variables: { projectId },
+				refetchQueries: [ { query: ALL_PROJECTS } ]
+			});
+			setLoading(false);
+			history.push("/projects")
+		}
+	};
 
 	return (
 		<div className="container p-5">
-			{loading ? <h4 className="text-danger">Chargement en cours...</h4> : <h4>Administration des projets</h4>}
-			{updateForm()}
-            <hr/>
+			{loading ? <h3 className="text-danger">Chargement en cours...</h3> : <h3>Project : {name}</h3>}
+				<p className="h5 m-2"><u>Description :</u> </p>
+				<p className="m-4">{description}</p>
+					<button
+						onClick={() => history.push(`/project/update/${_id}`)}
+						className="btn btn-raised btn-primary mr-4"
+					>Modifier</button>
+					<button onClick={() => handleDelete(_id)} className="btn btn-raised btn-danger">
+						Supprimer
+					</button>
+				<hr/>
+				<p className="h5"><u>Tâches :</u></p>
             <TimerView />
-			{/* <hr /> */}
-			{/* {singleProject && JSON.stringify(singleProject)} */}
 		</div>
 	);
 };

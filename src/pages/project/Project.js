@@ -124,7 +124,7 @@ const Project = () => {
 							<ProjectCard
 								handleDelete={handleDelete}
 								project={project}
-								showDeleteButton={true}
+								showDeleteButton={false}
 								showUpdateButton={true}
 							/>
 						</div>
