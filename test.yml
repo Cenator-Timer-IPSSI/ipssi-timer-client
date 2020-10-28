@@ -1,0 +1,12 @@
+# test.yml
+
+version: '3.7'
+
+services:
+  client:
+    container_name: client_test
+    build:
+      context: .
+      dockerfile: Dockerfile-production
+    environment:
+      - NODE_ENV=production
