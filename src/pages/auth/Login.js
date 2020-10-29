@@ -47,7 +47,7 @@ const Login = () => {
 				// send info to our server and mongodb to either create/update
 				createUser();
 				// redirect user
-				history.push('/profile');
+				history.push('./');
 			});
 		} catch (error) {
 			console.log(`Error ${error}`);
@@ -75,7 +75,7 @@ const Login = () => {
 				// send info to our server and mongodb to either create/update
 				createUser();
 				// redirect user
-				history.push('/profile');
+				history.push('./');
 			});
 		} catch (error) {
 			console.log(`Error ${error}`);
