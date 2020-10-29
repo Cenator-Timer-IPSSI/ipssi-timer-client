@@ -5,8 +5,9 @@ const ProjectCard = ({ project, handleDelete = (f) => f, showUpdateButton = fals
 	const history = useHistory();
 	const { _id, name, description, createdAt, tasks } = project;
 	return (
+		<a href={`/project/${_id}`} className="text-dark">
 		<div className="card bg-light mb-3" style={{ width: '22rem' }}>
-			<div className="card-header">Projet crÃ©Ã©e le {createdAt}</div> {/* date to format later */}
+			<div className="card-header">Projet créer le {createdAt}</div> {/* date to format later */}
 			<div className="card-body">
 				<h5 className="card-title">
 					<Link to={`/project/${_id}`}>{name}</Link>
@@ -38,6 +39,7 @@ const ProjectCard = ({ project, handleDelete = (f) => f, showUpdateButton = fals
 				</div>
 			</div>
 		</div>
+		</a>
 	);
 };
 

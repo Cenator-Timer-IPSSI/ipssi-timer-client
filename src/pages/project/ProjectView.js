@@ -1,13 +1,13 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useLazyQuery, useQuery, useMutation } from '@apollo/react-hooks';
-import { ALL_PROJECTS, SINGLE_TEAM, ALL_USERS, SINGLE_PROJECT } from '../../graphql/queries';
-import { UPDATE_TEAM, UPDATE_PROJECT, DELETE_PROJECT } from '../../graphql/mutations';
+import { ALL_PROJECTS, SINGLE_TEAM, ALL_USERS, SINGLE_PROJECT, SINGLE_Timer, ALL_TIMERS } from '../../graphql/queries';
+import { UPDATE_PROJECT, DELETE_PROJECT } from '../../graphql/mutations';
 import { useParams, useHistory } from 'react-router-dom';
 import omitDeep from 'omit-deep';
 import TimerView from '../timer/TimerView';
 
-const ProjectUpdate = () => {
+const Project = () => {
 	const [ values, setValues ] = useState({
 		_id: '',
 		name: '',
@@ -15,7 +15,6 @@ const ProjectUpdate = () => {
 	});
 	const history = useHistory();
 	const [ getSingleProject, { data: singleProject } ] = useLazyQuery(SINGLE_PROJECT);
-	const [ updateProject ] = useMutation(UPDATE_PROJECT);
 
 	const [ loading, setLoading ] = useState(false);
 
@@ -52,10 +51,11 @@ const ProjectUpdate = () => {
 	const onSubmitHandler = (e) => {
 		e.preventDefault();
 		setLoading(true);
-		updateProject({ variables: { input: values } });
 		setLoading(false);
 		toast.success("Les informations du projet sont mise à jour avec succès !");
 	};
+
+	//Delete project
 	const [ deleteProject ] = useMutation(DELETE_PROJECT, {
 		update: ({ data }) => {
 			console.log('DELETE PROJECT MUTATION', data);
@@ -66,7 +66,6 @@ const ProjectUpdate = () => {
 			toast.error('Une Erreur est survenue lors de la suppression du projet !');
 		}
 	});
-
 	const handleDelete = async (projectId) => {
 		// Ask user if he really want to delete
 		let answer = window.confirm('Voulez-vous vraiment supprimé ce projet ?');
@@ -80,6 +79,7 @@ const ProjectUpdate = () => {
 			history.push("/projects")
 		}
 	};
+	//Delete project
 
 	return (
 		<div className="container p-5">
@@ -95,9 +95,9 @@ const ProjectUpdate = () => {
 					</button>
 				<hr/>
 				<p className="h5"><u>Tâches :</u></p>
-            <TimerView />
+        <TimerView/>
 		</div>
 	);
 };
 
-export default ProjectUpdate;
+export default Project;

@@ -3,15 +3,17 @@ import { toast } from 'react-toastify';
 import { useLazyQuery, useQuery, useMutation } from '@apollo/react-hooks';
 import { SINGLE_TEAM, ALL_USERS, SINGLE_PROJECT } from '../../graphql/queries';
 import { UPDATE_TEAM, UPDATE_PROJECT } from '../../graphql/mutations';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import omitDeep from 'omit-deep';
 import TimerView from '../timer/TimerView';
 
 const ProjectUpdate = () => {
 	const [ values, setValues ] = useState({
+		_id: '',
 		name: '',
 		description: '',
 	});
+	const history = useHistory();
 	const [ getSingleProject, { data: singleProject } ] = useLazyQuery(SINGLE_PROJECT);
 	const [ updateProject ] = useMutation(UPDATE_PROJECT);
 
@@ -21,7 +23,7 @@ const ProjectUpdate = () => {
 	const { projectid } = useParams();
 
 	// Grab data inside state
-	const { name, description } = values;
+	const { _id, name, description } = values;
     const { data: usersFomDb } = useQuery(ALL_USERS);
 
 	useMemo(
@@ -52,6 +54,7 @@ const ProjectUpdate = () => {
 		setLoading(true);
 		updateProject({ variables: { input: values } });
 		setLoading(false);
+		history.push(`/project/${_id}`)
 		toast.success("Les informations du projet sont mise à jour avec succès !");
 	};
 
@@ -95,8 +98,6 @@ const ProjectUpdate = () => {
 		<div className="container p-5">
 			{loading ? <h4 className="text-danger">Chargement en cours...</h4> : <h4>Administration des projets</h4>}
 			{updateForm()}
-            <hr/>
-            <TimerView />
 			{/* <hr /> */}
 			{/* {singleProject && JSON.stringify(singleProject)} */}
 		</div>
