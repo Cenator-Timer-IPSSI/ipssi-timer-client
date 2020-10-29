@@ -10,6 +10,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 // components imports --
 import Nav from './components/Nav';
 import Home from './pages/Home';
+import Pomodoro from './pages/Pomodoro';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import CompleteRegistration from './pages/auth/CompleteRegistration';
@@ -68,6 +69,7 @@ const App = () => {
 			<ToastContainer />
 			<Switch>
 				<Route exact path="/" exact component={Home} />
+				<Route exact path="/pomodoro" exact component={Pomodoro} />
 				<CustomPublicRoute path="/login" exact component={Login} />
 				<CustomPublicRoute path="/register" exact component={Register} />
 				<Route path="/complete-registration" exact component={CompleteRegistration} />
