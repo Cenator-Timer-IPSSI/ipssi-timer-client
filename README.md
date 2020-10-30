@@ -1,5 +1,5 @@
 <div align="center">
-	<img width="500" height="200" src="./src/assets/logo.png" alt="Cenator Timer Manager logo">
+	<img width="500" height="500" src="./src/assets/logo.png" alt="Cenator Timer Manager logo">
 	<br>
 	<br>
 </div>
