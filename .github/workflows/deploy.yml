@@ -14,9 +14,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '13.10'
-    - name: Install yarn
+    - name: Install npm
       run: |
-        npm
+        npm install
       env:
         CI: true
     - name: Publish to Github Packages Registry
@@ -25,6 +25,6 @@ jobs:
         name: Almorisson/Cenator-Timer-IPSSI/ipssi-timer-client/cenator_client_app
         registry: docker.pkg.github.com
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ secrets.PASSWORD }}
         dockerfile: Dockerfile-prod
         tags: latest
