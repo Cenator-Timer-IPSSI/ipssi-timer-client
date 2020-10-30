@@ -1,5 +1,5 @@
 <div align="center">
-	<img width="500" height="200" src="./src/assets/logo.svg" alt="Cenator Timer Manager logo">
+	<img width="500" height="500" src="./src/assets/logo.png" alt="Cenator Timer Manager logo">
 	<br>
 	<br>
 </div>
@@ -65,6 +65,8 @@ Alternatively see the GitHub documentation on [creating a pull request](https://
 Here are the people who actively contributed to this project:
 
 * [@almorisson](https://github.com/almorisson) 📖
+* [@anagaret](https://github.com/Anagaret)📖
+* [@JeanEmpereur](https://github.com/JeanEmpereur)📖
 
 You might want to consider using something like the [All Contributors](https://github.com/all-contributors/all-contributors) specification and its [emoji key](https://allcontributors.org/docs/en/emoji-key) if you want to contribute to the project.
 
