@@ -10,6 +10,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 // components imports --
 import Nav from './components/Nav';
 import Home from './pages/Home';
+import Pomodoro from './pages/Pomodoro';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import CompleteRegistration from './pages/auth/CompleteRegistration';
@@ -29,8 +30,12 @@ import { ToastContainer } from 'react-toastify';
 import './App.css';
 import CustomPublicRoute from './components/CustomPublicRoute';
 import Team from './pages/team/Team';
+import TeamAdd from './pages/team/TeamAdd';
+import TeamView from './pages/team/TeamView';
 import TeamUpdate from './pages/team/TeamUpdate';
 import Project from './pages/project/Project';
+import ProjectAdd from './pages/project/ProjectAdd';
+import ProjectView from './pages/project/ProjectView';
 import ProjectUpdate from './pages/project/ProjectUpdate';
 
 const App = () => {
@@ -63,17 +68,22 @@ const App = () => {
 			<Nav />
 			<ToastContainer />
 			<Switch>
-				<Route exact path="/" component={Home} />
-				<CustomPublicRoute path="/login" component={Login} />
-				<CustomPublicRoute path="/register" component={Register} />
-				<Route path="/complete-registration" component={CompleteRegistration} />
-				<CustomPrivateRoute path="/password/update" component={PasswordUpdate} />
-				<Route path="/password/forgot" component={PasswordForgot} />
-				<CustomPrivateRoute path="/profile" component={Profile} />
-				<CustomPrivateRoute path="/teams" component={Team} />
-				<CustomPrivateRoute path="/team/update/:teamid" component={TeamUpdate} />
-				<CustomPrivateRoute path="/projects" component={Project} />
-				<CustomPrivateRoute path="/project/update/:projectid" component={ProjectUpdate} />
+				<Route exact path="/" exact component={Home} />
+				<Route exact path="/pomodoro" exact component={Pomodoro} />
+				<CustomPublicRoute path="/login" exact component={Login} />
+				<CustomPublicRoute path="/register" exact component={Register} />
+				<Route path="/complete-registration" exact component={CompleteRegistration} />
+				<CustomPrivateRoute path="/password/update" exact component={PasswordUpdate} />
+				<Route path="/password/forgot" exact component={PasswordForgot} />
+				<CustomPrivateRoute path="/profile" exact component={Profile} />
+				<CustomPrivateRoute path="/teams" exact component={Team} />
+				<CustomPrivateRoute path="/teams/add" exact component={TeamAdd} />
+				<CustomPrivateRoute path="/team/:teamid" exact component={TeamView} />
+				<CustomPrivateRoute path="/team/update/:teamid" exact component={TeamUpdate} />
+				<CustomPrivateRoute path="/projects" exact component={Project} />
+				<CustomPrivateRoute path="/project/add" exact component={ProjectAdd} />
+				<CustomPrivateRoute path="/project/:projectid" exact component={ProjectView} />
+				<CustomPrivateRoute path="/project/update/:projectid" exact component={ProjectUpdate} />
 			</Switch>
 		</ApolloProvider>
 	);

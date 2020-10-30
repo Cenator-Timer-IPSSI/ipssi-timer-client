@@ -2,7 +2,7 @@ import React, { useContext, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { auth } from 'firebase';
 import { AuthContext } from '../context/authContext';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 const Nav = () => {
 	const { state: { user }, dispatch } = useContext(AuthContext);
 	let history = useHistory();
@@ -21,9 +21,9 @@ const Nav = () => {
 	};
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light bg-light">
+		<nav className="navbar navbar-expand-md navbar-light bg-light">
 			<Link className="navbar-brand" to="/" type="button" style={{ padding: 0 }}>
-				<img src={logo} alt="Cenator Timer logo" style={{ height: "4rem" }}/>
+				<img src={logo} alt="Cenator Timer logo" style={{ height: "6rem" }}/>
 			</Link>
 			<button
 				className="navbar-toggler"
@@ -50,7 +50,7 @@ const Nav = () => {
 					{!user && (
 						<Fragment>
 							<li className="nav-item">
-								<Link className="nav-link" to="/register">
+								<Link className="nav-link font-weight-bold" to="/register">
 									Créer un compte
 								</Link>
 							</li>
@@ -65,18 +65,20 @@ const Nav = () => {
 						</li>
 					) : (
 						<li className="nav-item">
-							<Link className="nav-link" to="/login">
+							<Link className="nav-link font-weight-bold" to="/login">
 								Se connecter
 							</Link>
 						</li>
 					)}
 				</ul>
-				<form className="form-inline my-2 my-lg-0">
-					<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-					<button className="btn btn-outline-success my-2 my-sm-0" type="submit">
-						Search
-					</button>
-				</form>
+				{user && (
+					<form className="form-inline my-2 my-lg-0">
+						<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+						<button className="btn btn-outline-success my-2 my-sm-0" type="submit">
+							Search
+						</button>
+					</form>
+				)}
 			</div>
 		</nav>
 	);
