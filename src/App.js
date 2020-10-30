@@ -40,10 +40,16 @@ import ProjectUpdate from './pages/project/ProjectUpdate';
 
 const App = () => {
 	const { state: { user } } = useContext(AuthContext);
+    let uri = "";
+    if (process.env.NODE_ENV === "production" ) {
+        uri = "https://cenator-api.herokuapp.com/graphql";
+    } else {
+        uri = process.env.REACT_APP_GRAPHQL_ENDPOINT
+    }
 
 	// create http link
 	const httpLink = new HttpLink({
-		uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
+        uri: uri
 	});
 
 	// setContext for authtoken
