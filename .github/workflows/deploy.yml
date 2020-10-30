@@ -23,9 +23,9 @@ jobs:
     - name: Publish to Github Packages Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: Almorisson/Cenator-Timer-IPSSI/ipssi-timer-client/my_image_name
+        name: Almorisson/Cenator-Timer-IPSSI/ipssi-timer-client/cenator_client_app
         registry: docker.pkg.github.com
-        username: ${{ secrets.GITHUB_USERNAME }}
+        username: ${{ secrets.USERNAME }}
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: Dockerfile-prod
         tags: latest
